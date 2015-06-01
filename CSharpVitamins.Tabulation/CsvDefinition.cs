@@ -63,7 +63,7 @@ namespace CSharpVitamins.Tabulation
 			{
 				HeaderWritten = true;
 
-				string header = string.Join(delimiter, this.Select(x => escape(x.Key, escChars)));
+				string header = string.Join(delimiter, this.Select(x => Escape(x.Key, escChars)));
 				writer.WriteLine(header);
 			}
 
@@ -71,7 +71,7 @@ namespace CSharpVitamins.Tabulation
 			{
 				string line = string.Join(
 					delimiter,
-					this.Select(x => escape(x.Value(row), escChars)) // x.Value == Func<T, string>
+					this.Select(x => Escape(x.Value(row), escChars)) // x.Value == Func<T, string>
 					);
 
 				writer.WriteLine(line);
@@ -113,7 +113,7 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		// adapted from: http://www.asp.net/web-api/overview/formats-and-model-binding/media-formatters
-		static string escape(string value, char[] chars)
+		public static string Escape(string value, char[] chars)
 		{
 			if (value == null)
 				return null;

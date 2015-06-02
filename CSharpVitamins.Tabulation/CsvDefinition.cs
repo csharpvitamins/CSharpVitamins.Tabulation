@@ -90,11 +90,11 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Creates a "Tabulator" instance with the fields in this definition, for fixed length column plain text output
+		/// Creates a "PlainTextTable" instance with the fields in this definition, for fixed length column plain text output
 		/// </summary>
-		/// <param name="rows"></param>
-		/// <param name="tab"></param>
-		/// <returns></returns>
+		/// <param name="rows">The rows of data to tabulate</param>
+		/// <param name="tab">Optional, if specified adds the tabulated data to the table. A new instance will be created and returned if this is null.</param>
+		/// <returns>Either the PlainTextTable instance that was passed in, or a new instance of a PlainTextTable, populated with the data from the rows.</returns>
 		public PlainTextTable Tabulate(IEnumerable<T> rows, PlainTextTable tab = null)
 		{
 			if (null == tab)
@@ -112,7 +112,17 @@ namespace CSharpVitamins.Tabulation
 			return tab;
 		}
 
-		// adapted from: http://www.asp.net/web-api/overview/formats-and-model-binding/media-formatters
+		/// <summary>
+		/// When found, escapes the entire string CSV style, by surrounding with quotes (embedded quotes are replaced with "")
+		/// </summary>
+		/// <param name="value">The string to escape</param>
+		/// <param name="chars">The sepcial chars that trigger the escape</param>
+		/// <remarks>
+		/// adapted from: http://www.asp.net/web-api/overview/formats-and-model-binding/media-formatters
+		/// 
+		/// This method should possibly quote strings the have leading or trailing whitespace.
+		/// </remarks>
+		/// <returns></returns>
 		public static string Escape(string value, char[] chars)
 		{
 			if (value == null)

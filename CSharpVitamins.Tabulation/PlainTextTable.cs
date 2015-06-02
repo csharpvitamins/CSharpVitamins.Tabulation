@@ -126,8 +126,8 @@ namespace CSharpVitamins.Tabulation
 		/// <summary>
 		/// Sets the alignment of the column
 		/// </summary>
-		/// <param name="index"></param>
-		/// <param name="align"></param>
+		/// <param name="index">The column index to set the alignment of</param>
+		/// <param name="align">The alignment</param>
 		/// <returns></returns>
 		public PlainTextTable Align(int index, Alignment align)
 		{
@@ -138,8 +138,8 @@ namespace CSharpVitamins.Tabulation
 		/// <summary>
 		/// Sets the alignment of a column
 		/// </summary>
-		/// <param name="index"></param>
-		/// <param name="align"></param>
+		/// <param name="index">The column index to set the alignment of</param>
+		/// <param name="align">The alignment char - 'l' for left, 'r' for right, 'c' or 'm' for centre/middle</param>
 		/// <returns></returns>
 		public PlainTextTable Align(int index, char align)
 		{
@@ -148,10 +148,9 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Sets multiple alignments, matching the arugments index to the columns index
+		/// Sets multiple alignments, matching the arguments index to the columns index
 		/// </summary>
-		/// <param name="index"></param>
-		/// <param name="align"></param>
+		/// <param name="alignments">The array or alignment characters, in column index order - 'l' for left, 'r' for right, 'c' or 'm' for centre/middle</param>
 		/// <returns></returns>
 		public PlainTextTable Align(params char[] alignments)
 		{
@@ -229,25 +228,39 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Renders the set of data using the default alignment
+		/// Returns the column state information for the current object (used for rendering).
+		/// Includes max width of column, alignment and index
 		/// </summary>
-		/// <param name="writer"></param>
-		public void Render(TextWriter writer)
+		/// <returns></returns>
+		public ColumnState[] GetColumnState()
 		{
+			if (ColumnsExpected < 1)
+				throw new InvalidOperationException("ColumnsExpected must be set to return column state. Try importing data first, or explicitly set ColumnsExpected.");
+
 			var columns = new ColumnState[ColumnsExpected];
 			for (var i = 0; i < ColumnsExpected; ++i)
 			{
 				Alignment align;
-				if (Alignments.TryGetValue(i, out align))
+				if (!Alignments.TryGetValue(i, out align))
 					align = Alignment.Left;
 
 				columns[i] = new ColumnState
 				{
 					Index = i,
-					Length = maxColumnLengths[i],
+					Width = maxColumnLengths[i],
 					Align = align
 				};
 			}
+			return columns;
+		}
+
+		/// <summary>
+		/// Renders the set of data using the default alignment
+		/// </summary>
+		/// <param name="writer"></param>
+		public void Render(TextWriter writer)
+		{
+			var columns = GetColumnState();
 
 			int l = rows.Count;
 			var lookup = Dividers.ToLookup(x => x.Index >= 0 ? x.Index : (l + x.Index + 1));
@@ -313,7 +326,7 @@ namespace CSharpVitamins.Tabulation
 				writer.Write(ColumnSeparator);
 
 			bool mustHaveRightPadding = !TrimTrailingWhitespace || index < count - 1;
-			string padded = Pad(text, column.Length, column.Align, mustHaveRightPadding);
+			string padded = Pad(text, column.Width, column.Align, mustHaveRightPadding);
 			writer.Write(padded);
 		}
 
@@ -337,7 +350,7 @@ namespace CSharpVitamins.Tabulation
 					padding = ColumnSeparator.Length;
 			}
 
-			writer.Write(new string(divider.Char, column.Length + padding));
+			writer.Write(new string(divider.Char, column.Width + padding));
 		}
 
 		/// <summary>

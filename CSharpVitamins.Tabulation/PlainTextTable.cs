@@ -390,6 +390,7 @@ namespace CSharpVitamins.Tabulation
 			{
 				case ' ':
 				case 'l': return Alignment.Left;
+				case 'm':
 				case 'c': return Alignment.Center;
 				case 'r': return Alignment.Right;
 			}

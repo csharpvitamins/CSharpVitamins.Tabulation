@@ -7,6 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpVitamins.Tabulation",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpVitamins.Tabulation.Tests", "..\CSharpVitamins.Tabulation.Tests\CSharpVitamins.Tabulation.Tests.csproj", "{7B2B65B2-44D1-4D5A-91A8-FC03B6795808}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5091B268-5906-48F2-BC73-07F8A33D5902}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\nuget.config = .nuget\nuget.config
+		.nuget\nuget.exe = .nuget\nuget.exe
+		.nuget\nuget.targets = .nuget\nuget.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

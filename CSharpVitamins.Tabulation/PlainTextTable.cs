@@ -312,32 +312,9 @@ namespace CSharpVitamins.Tabulation
 			if (index > 0)
 				writer.Write(ColumnSeparator);
 
-			if (text.Length == column.Length)
-				writer.Write(text);
-			else
-			{
-				bool doPadRight = !TrimTrailingWhitespace || index < count - 1;
-				switch (column.Align)
-				{
-					case Alignment.Left:
-						writer.Write(text.PadRight(doPadRight ? column.Length : 1));
-						break;
-
-					case Alignment.Right:
-						writer.Write(text.PadLeft(column.Length));
-						break;
-
-					case Alignment.Center:
-						var remainder = column.Length - text.Length; // required padding
-						var halfway = (int)Math.Floor(remainder / 2D);
-
-						writer.Write(
-							(doPadRight ? string.Concat(text, new string(' ', halfway)) : text)
-							.PadLeft(column.Length)
-							);
-						break;
-				}
-			}
+			bool mustHaveRightPadding = !TrimTrailingWhitespace || index < count - 1;
+			string padded = Pad(text, column.Length, column.Align, mustHaveRightPadding);
+			writer.Write(padded);
 		}
 
 		/// <summary>
@@ -361,6 +338,43 @@ namespace CSharpVitamins.Tabulation
 			}
 
 			writer.Write(new string(divider.Char, column.Length + padding));
+		}
+
+		/// <summary>
+		/// Pads the string given the alignment
+		/// </summary>
+		/// <param name="text">The value to pad</param>
+		/// <param name="longestLength">The length to pad the string to (longest length of a column)</param>
+		/// <param name="align">The alignment of the column</param>
+		/// <param name="padRight">If trailing whitespace _can_ be omitted, right padding will not be added.</param>
+		/// <param name="paddingChar">The character to use to pad the string, defaults to a space</param>
+		/// <returns></returns>
+		public static string Pad(string text, int longestLength, Alignment align, bool padRight, char paddingChar = ' ')
+		{
+			if(null == text)
+				throw new ArgumentException("text");
+
+			if (text.Length == longestLength)
+				return text;
+
+			switch (align)
+			{
+				case Alignment.Left:
+					return padRight ? text.PadRight(longestLength, paddingChar) : text;
+
+				case Alignment.Right:
+					return text.PadLeft(longestLength, paddingChar);
+
+				case Alignment.Center:
+					int remainder = longestLength - text.Length; // required padding
+					int halfway = (int)Math.Floor(remainder / 2D);
+
+					return padRight 
+						? string.Concat(new string(paddingChar, halfway), text, new string(paddingChar, remainder - halfway)) 
+						: string.Concat(new string(paddingChar, halfway), text);
+			}
+
+			throw new NotImplementedException();
 		}
 
 		/// <summary>

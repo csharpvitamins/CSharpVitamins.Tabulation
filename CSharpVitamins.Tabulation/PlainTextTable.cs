@@ -104,9 +104,9 @@ namespace CSharpVitamins.Tabulation
 		/// <summary>
 		/// When true, trims any trailing whitespace from the rightmost column
 		/// </summary>
-		/// <param name="value"></param>
+		/// <param name="value">Defaults to true</param>
 		/// <returns></returns>
-		public PlainTextTable TrimTrailingSpace(bool value)
+		public PlainTextTable TrimTrailingSpace(bool value = true)
 		{
 			TrimTrailingWhitespace = value;
 			return this;
@@ -115,7 +115,7 @@ namespace CSharpVitamins.Tabulation
 		/// <summary>
 		/// The string that separates two cells
 		/// </summary>
-		/// <param name="value"></param>
+		/// <param name="value">The separator for cells</param>
 		/// <returns></returns>
 		public PlainTextTable SeparateBy(string value)
 		{

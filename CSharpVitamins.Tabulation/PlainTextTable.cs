@@ -161,6 +161,20 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
+		/// Sets multiple alignments, matching the arguments index to the columns index
+		/// </summary>
+		/// <param name="alignments">The array or alignment characters, in column index order - 'l' for left, 'r' for right, 'c' or 'm' for centre/middle</param>
+		/// <returns></returns>
+		public PlainTextTable Align(IEnumerable<char> alignments)
+		{
+			int index = -1;
+			foreach(char c in alignments)
+				Alignments[++index] = parse_alignment(c);
+
+			return this;
+		}
+
+		/// <summary>
 		/// Enumerates data calling AddLine for each item
 		/// </summary>
 		/// <param name="rows"></param>

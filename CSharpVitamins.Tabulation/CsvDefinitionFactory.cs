@@ -55,7 +55,7 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Creates a definition from the given model's properties (prop.Name & prop.Value.ToString())
+		/// Creates a definition from the given model's properties (prop.Name &amp; prop.Value.ToString())
 		/// </summary>
 		/// <typeparam name="T">The model to reflect on</typeparam>
 		/// <returns>A TableDefinition instance that can render rows of data given the model T</returns>

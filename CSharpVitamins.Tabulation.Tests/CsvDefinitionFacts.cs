@@ -66,6 +66,22 @@ namespace Tests
 		}
 
 		[Fact]
+		void contains_should_returnTrueWhenFound()
+		{
+			var fields = create_definition();
+			var actual = fields.Contains("Field B");
+			Assert.Equal(true, actual);
+		}
+
+		[Fact]
+		void contains_should_returnFalseWhenNotFound()
+		{
+			var fields = create_definition();
+			var actual = fields.Contains("Field X");
+			Assert.Equal(false, actual);
+		}
+
+		[Fact]
 		void fieldRemoval_should_removeSecondElement()
 		{
 			var fields = create_definition();
@@ -77,6 +93,32 @@ namespace Tests
 			Assert.Equal("Field A", fields[0].Key);
 			// B is gone
 			Assert.Equal("Field C", fields[1].Key);
+		}
+
+		[Fact]
+		void fieldRemovalByName_should_returnTrueWhenFound()
+		{
+			var fields = create_definition();
+
+			bool result = fields.Remove("Field B");
+
+			Assert.Equal(true, result);
+			Assert.Equal(2, fields.Count);
+
+			Assert.Equal("Field A", fields[0].Key);
+			// B is gone
+			Assert.Equal("Field C", fields[1].Key);
+		}
+
+		[Fact]
+		void fieldRemovalByName_should_returnFalseWhenNotFound()
+		{
+			var fields = create_definition();
+
+			bool result = fields.Remove("Field X");
+
+			Assert.Equal(false, result);
+			Assert.Equal(3, fields.Count);
 		}
 
 		[Fact]

@@ -37,6 +37,17 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
+		/// Determines if the field column/header is present in the current collection
+		/// </summary>
+		/// <param name="key">The name of the column/header</param>
+		/// <param name="comparison">The string comparison to use - defaults to StringComparison.Ordinal</param>
+		/// <returns>True if the key was found.</returns>
+		public bool Contains(string key, StringComparison comparison = StringComparison.Ordinal)
+		{
+			return this.FindIndex(x => string.Equals(x.Key, key, comparison)) != -1;
+		}
+
+		/// <summary>
 		/// Adds a Key/Value pair to the definition - used for easy object initialisation
 		/// </summary>
 		/// <param name="key">The name of the column/header</param>
@@ -44,6 +55,22 @@ namespace CSharpVitamins.Tabulation
 		public void Add(string key, Func<T, string> value)
 		{
 			Add(new KeyValuePair<string, Func<T, string>>(key, value));
+		}
+
+		/// <summary>
+		/// Removes the field that matches the given column/header key. 
+		/// </summary>
+		/// <param name="key">The name of the column/header</param>
+		/// <param name="comparison">The string comparison to use - defaults to StringComparison.Ordinal</param>
+		/// <returns>True if the field was found and removed, otherwise false</returns>
+		public bool Remove(string key, StringComparison comparison = StringComparison.Ordinal)
+		{
+			var index = this.FindIndex(x => string.Equals(x.Key, key, comparison));
+			if (index == -1)
+				return false;
+
+			this.RemoveAt(index);
+			return true;
 		}
 
 		/// <summary>

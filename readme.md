@@ -4,7 +4,7 @@ This library aims to provide helpers for creating tabular data with minimal fuss
 
 Easily create *tab* or *comma* separated values (via `CsvDefinition`), or padded and aligned columns of plain text (with `PlainTextTable`).
 
-This library is available on [NuGet](https://www.nuget.org/packages/csharpvitamins.tabulation/). To install, run the following command in the Package Manager Console:
+Available on [NuGet](https://www.nuget.org/packages/csharpvitamins.tabulation/). To install, run the following command in the Package Manager Console:
 
 	PM> Install-Package CSharpVitamins.Tabulation
 
@@ -12,7 +12,7 @@ This library is available on [NuGet](https://www.nuget.org/packages/csharpvitami
 
 ## Usage: `CsvDefinition`
 
-`CsvDefinition` is designed for quick production of CSV style text - it aims to keep the column header and *how* to produce the value close together.
+`CsvDefinition` is designed for quick production of CSV style text - it aims to keep the *column header* and *how* to produce the value close together.
 
 	// vars to be used inside column value funcs
 	const decimal VIP_SPEND = 1000000M;
@@ -58,15 +58,14 @@ At its heart, `CsvDefinition<T>` is a wrapper around `List<KeyValuePair<string, 
 		fields.Remove("Spend $");
 
 
-#### Create from a class
+**Or have the definition created for you, from a class**
 
-You can also create a a definition from a model/class 
 
 	var fields = new CsvDefinitionFactory().CreateFromModel<MyEntity>();
 
 	... get data, create writer, etc...
 
-	fields.Write(writer, rows, "\t");
+	fields.Write(writer, rows, ",");
 
 If you want more control over the production of the results, you can specify `Func<PropertyInfo, object, string>` converters for the type. 
 
@@ -87,7 +86,12 @@ If you want more control over the production of the results, you can specify `Fu
 
 ## Usage: `PlainTextTable`
 
-A `PlainTextTable` allows padding of tabular data so it can be displayed easily as text.
+A `PlainTextTable` allows padding of tabular data so it can be displayed easily as text. 
+ 
+ * Works best with small to medium length strings of data
+ * Does not support *multi-line text* (newlines) or *tabs* 
+ * Since columns are padded using spaces, output from this class is best presented using a **fixed-wdith font**
+
 
 #### Example 1: classic
 
@@ -107,9 +111,9 @@ A `PlainTextTable` allows padding of tabular data so it can be displayed easily 
 
 which might return
 
-	Name    Enabled? Job
-	Dave       Y     Developer
-	Sarah      Y     Designer
+	Name    Enabled? Job          
+	Dave       Y     Developer    
+	Sarah      Y     Designer     
 	Mustafa    N     Data Analysis
 	
 
@@ -133,6 +137,5 @@ which might produce something like this
 	TPS Report final   | 0 bytes |  late
 
 
- 
 
 Happy coding!

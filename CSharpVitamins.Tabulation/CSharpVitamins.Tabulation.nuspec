@@ -9,8 +9,8 @@
 	<!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>CharpVitamins.Tabulation provides helpers to create tabular data with little fuss i.e. Tab or comma separated values (CsvDefinition), or padded columns of plain text (PlainTextTable).</description>
-    <releaseNotes>initial release.</releaseNotes>
+    <!--<releaseNotes>initial release.</releaseNotes>-->
     <copyright>Copyright 2015</copyright>
-    <tags>Text CSV </tags>
+    <tags>CSV Text</tags>
   </metadata>
 </package>

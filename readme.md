@@ -4,6 +4,11 @@ This library aims to provide helpers for creating tabular data with minimal fuss
 
 Easily create *tab* or *comma* separated values (via `CsvDefinition`), or padded and aligned columns of plain text (with `PlainTextTable`).
 
+This library is available on [NuGet](https://www.nuget.org/packages/csharpvitamins.tabulation/). To install, run the following command in the Package Manager Console:
+
+	PM> Install-Package CSharpVitamins.Tabulation
+
+
 
 ## Usage: `CsvDefinition`
 
@@ -57,7 +62,7 @@ At its heart, `CsvDefinition<T>` is a wrapper around `List<KeyValuePair<string, 
 
 You can also create a a definition from a model/class 
 
-	var fields = new CsvDefinitionFactory().CreateFromModel<MyModel>();
+	var fields = new CsvDefinitionFactory().CreateFromModel<MyEntity>();
 
 	... get data, create writer, etc...
 
@@ -74,9 +79,9 @@ If you want more control over the production of the results, you can specify `Fu
 	factory.ValueConverters.Add(typeof(bool), (prop, value) => (bool)value ? "Y" : "N");
 
 	// use the factory to create multiple defitions  
-	var def1 = factory.CreateFromModel<MyModel>();
+	var def1 = factory.CreateFromModel<MyEntity>();
 
-	var def2 = factory.CreateFromModel<AnotherModel>();
+	var def2 = factory.CreateFromModel<AnotherClass>();
 
 
 
@@ -125,5 +130,9 @@ which might produce something like this
 	Name               |    Size |  State
 	TPS Report rev 362 |   42 MB | started
 	readme.md          |    6 KB |  late
-	TPS Report rev 1   | 0 bytes |  late
+	TPS Report final   | 0 bytes |  late
+
+
  
+
+Happy coding!

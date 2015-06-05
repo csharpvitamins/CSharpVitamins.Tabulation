@@ -249,7 +249,7 @@ namespace CSharpVitamins.Tabulation
 		public ColumnState[] GetColumnState()
 		{
 			if (ColumnsExpected < 1)
-				throw new InvalidOperationException("ColumnsExpected must be set to return column state. Try importing data first, or explicitly set ColumnsExpected.");
+				return new ColumnState[0];
 
 			var columns = new ColumnState[ColumnsExpected];
 			for (var i = 0; i < ColumnsExpected; ++i)
@@ -274,12 +274,13 @@ namespace CSharpVitamins.Tabulation
 		/// <param name="writer"></param>
 		public void Render(TextWriter writer)
 		{
+			int length = rows.Count;
+			if (length == 0)
+				return;
+
 			var columns = GetColumnState();
-
-			int l = rows.Count;
-			var lookup = Dividers.ToLookup(x => x.Index >= 0 ? x.Index : (l + x.Index + 1));
-
-			for (int i = 0; i <= l; ++i)
+			var lookup = Dividers.ToLookup(x => x.Index >= 0 ? x.Index : (length + x.Index + 1));
+			for (int i = 0; i <= length; ++i)
 			{
 				var dividers = lookup[i];
 				if (dividers.Any())
@@ -288,7 +289,7 @@ namespace CSharpVitamins.Tabulation
 						render_divider_line(writer, divider, columns, ColumnsExpected);
 				}
 
-				if (i < l)
+				if (i < length)
 				{
 					string[] rowData = rows[i];
 					render_data_line(writer, rowData, columns, ColumnsExpected);

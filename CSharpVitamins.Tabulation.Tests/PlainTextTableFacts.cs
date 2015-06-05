@@ -50,11 +50,14 @@ namespace Tests
 		}
 
 		[Fact]
-		void columnState_should_throwExceptionIfExpectedColumnIsInvalid()
+		void columnState_should_returnAnEmptyArrayWhenNoColumnsHaveBeenImported()
 		{
 			var tab = new PlainTextTable();
 
-			Assert.Throws(typeof(InvalidOperationException), () => tab.GetColumnState());
+			var columns = tab.GetColumnState();
+
+			Assert.NotNull(columns);
+			Assert.Equal(0, columns.Length);
 		}
 
 		[Fact]
@@ -142,6 +145,16 @@ namespace Tests
 			var actual = PlainTextTable.Pad(input, length, align, padRight);
 
 			Assert.Equal(expected, actual);
+		}
+
+		[Fact]
+		void emptyEnumerable_should_renderAnEmptyString()
+		{
+			var tab = new PlainTextTable(Enumerable.Empty<string[]>());
+
+			var actual = tab.ToString();
+
+			Assert.Equal(string.Empty, actual);
 		}
 
 		[Fact]

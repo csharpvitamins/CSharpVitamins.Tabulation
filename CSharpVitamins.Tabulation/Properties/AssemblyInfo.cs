@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("CSharpVitamins.Tabulation")]
 [assembly: AssemblyDescription("CharpVitamins.Tabulation provides helpers to create tabular data with little fuss i.e. Tab or comma separated values (CsvDefinition), or padded columns of plain text (PlainTextTable).")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Dave Transom")]
 [assembly: AssemblyProduct("CSharpVitamins.Tabulation")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]

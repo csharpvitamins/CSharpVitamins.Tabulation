@@ -105,11 +105,29 @@ namespace Tests
 		}
 
 		[Fact]
-		void fluid_should_setAlignments()
+		void fluid_should_setAlignmentsByChars()
 		{
 			var tab = new PlainTextTable(create_test_data());
 
 			tab.Align('l', 'm', 'r');
+
+			Assert.Equal(3, tab.Alignments.Count);
+
+			var columns = tab.GetColumnState();
+
+			Assert.Equal(3, columns.Length);
+
+			Assert.Equal(Alignment.Left, columns[0].Align);
+			Assert.Equal(Alignment.Center, columns[1].Align);
+			Assert.Equal(Alignment.Right, columns[2].Align);
+		}
+
+		[Fact]
+		void fluid_should_setAlignmentsByString()
+		{
+			var tab = new PlainTextTable(create_test_data());
+
+			tab.Align("lmr");
 
 			Assert.Equal(3, tab.Alignments.Count);
 

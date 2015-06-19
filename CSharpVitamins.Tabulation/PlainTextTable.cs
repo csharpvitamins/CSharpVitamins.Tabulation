@@ -175,6 +175,30 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
+		/// Adds a new divider to the Dividers collection. 
+		/// 
+		/// Dividers are rendered before the index of the next row.
+		/// </summary>
+		/// <param name="index">
+		///	The line index of where the divider should be inserted. 
+		///	
+		/// Use a negative value to work from the last item, backwards (for a footer, for instance).
+		///	
+		///	* An index of 1 will insert a divider after the first row
+		///	* An index of -1 will insert a divider after the last row (an end-of-table divider)
+		///	* An index of -2 will insert a divider before the last row (a summary divider)
+		///	</param>
+		/// <param name="repeatChar">The char to repeat in the separator</param>
+		/// <param name="useColumnseparator">If true, the column separators are inserted at the correct intervals, otherwise the divider will span the entire length</param>
+		/// <returns></returns>
+		public PlainTextTable DivideAt(int index, char repeatChar, bool useColumnseparator = false)
+		{
+			Dividers.Add(new Divider { Index = index, Char = repeatChar, UseColumnSeparator = useColumnseparator });
+
+			return this;
+		}
+
+		/// <summary>
 		/// Enumerates data calling AddLine for each item
 		/// </summary>
 		/// <param name="rows"></param>

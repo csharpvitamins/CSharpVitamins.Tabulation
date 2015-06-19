@@ -270,5 +270,49 @@ R3-A | R3-B|  R3-C
 
 			Assert.Equal(expected, result);
 		}
+
+		[Fact]
+		void divider_should_renderHeaderAndBlankFooter()
+		{
+			var tab = new PlainTextTable(create_test_data());
+
+			tab.DivideAt(1, '-');
+			tab.DivideAt(-1, '-');
+
+			var result = tab.ToString();
+			output.WriteLine(result + "EOL");
+			
+			string expected = @"Col A Col B Col C    
+---------------------
+R1-A  R1-B  R1-C     
+R2-A  R2-B  R2-C long
+R3-A  R3-B  R3-C     
+---------------------
+";
+
+			Assert.Equal(expected, result);
+		}
+
+		[Fact]
+		void divider_should_renderHeaderAndSummaryFooter()
+		{
+			var tab = new PlainTextTable(create_test_data());
+
+			tab.DivideAt(1, '-');
+			tab.DivideAt(-2, '-');
+
+			var result = tab.ToString();
+			output.WriteLine(result + "EOL");
+			
+			string expected = @"Col A Col B Col C    
+---------------------
+R1-A  R1-B  R1-C     
+R2-A  R2-B  R2-C long
+---------------------
+R3-A  R3-B  R3-C     
+";
+
+			Assert.Equal(expected, result);
+		}
 	}
 }

@@ -330,8 +330,7 @@ R3-A  R3-B  R3-C
 			var result = tab.ToString();
 			output.WriteLine(result + "EOL");
 			
-			string expected = @"
-Name    Value  
+			string expected = @"Name    Value  
 ---------------
 Data a1 Data b1
 Data a2 Data b2

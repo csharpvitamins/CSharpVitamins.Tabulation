@@ -137,5 +137,27 @@ which might produce something like this
 	TPS Report final   | 0 bytes |  late
 
 
+Dividers can also be injected to separate headers, content and footers, e.g.
+
+	return new PlainTextTable()
+		.Align('L', 'R')
+		.SeparateBy("   ")
+		.AddRow("Name", "Size")
+		.Divide('-')
+		.ImportRows(someDataSource.Select(x => new string[] { x.Name, x.Size.ToString() }))
+		.Divide('-')
+		.AddRow(null, someDataSource.Sum(x => x.Size).ToString())
+		.ToString();
+
+resulting in...
+
+	Name             Size
+	---------------------
+	File1.txt        5 KB
+	File2.config    12 KB
+	File3.exe      137 KB
+	---------------------
+	               154 KB
+
 
 Happy coding!

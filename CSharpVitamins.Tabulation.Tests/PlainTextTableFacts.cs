@@ -181,7 +181,7 @@ namespace Tests
 			var tab = new PlainTextTable(create_test_data());
 
 			var result = tab.ToString();
-			output.WriteLine(result + "EOL");
+			output.WriteLine(result + "EOM");
 			
 			string expected = @"Col A Col B Col C    
 R1-A  R1-B  R1-C     
@@ -200,7 +200,7 @@ R3-A  R3-B  R3-C
 			tab.TrimTrailingSpace(true);
 
 			var result = tab.ToString();
-			output.WriteLine(result + "EOL");
+			output.WriteLine(result + "EOM");
 			
 			string expected = @"Col A Col B Col C
 R1-A  R1-B  R1-C
@@ -219,7 +219,7 @@ R3-A  R3-B  R3-C
 			tab.SeparateBy(" | ");
 
 			var result = tab.ToString();
-			output.WriteLine(result + "EOL");
+			output.WriteLine(result + "EOM");
 			
 			string expected = @"Col A | Col B | Col C    
 R1-A  | R1-B  | R1-C     
@@ -239,7 +239,7 @@ R3-A  | R3-B  | R3-C
 			tab.Align('l', 'r', 'm');
 
 			var result = tab.ToString();
-			output.WriteLine(result + "EOL");
+			output.WriteLine(result + "EOM");
 			
 			string expected = @"Col A|Col B|  Col C  
 R1-A | R1-B|  R1-C   
@@ -260,7 +260,7 @@ R3-A | R3-B|  R3-C
 			tab.TrimTrailingSpace(true);
 
 			var result = tab.ToString();
-			output.WriteLine(result + "EOL");
+			output.WriteLine(result + "EOM");
 			
 			string expected = @"Col A|Col B|  Col C
 R1-A | R1-B|  R1-C
@@ -280,7 +280,7 @@ R3-A | R3-B|  R3-C
 			tab.DivideAt(-1, '-');
 
 			var result = tab.ToString();
-			output.WriteLine(result + "EOL");
+			output.WriteLine(result + "EOM");
 			
 			string expected = @"Col A Col B Col C    
 ---------------------
@@ -302,7 +302,7 @@ R3-A  R3-B  R3-C
 			tab.DivideAt(-2, '-');
 
 			var result = tab.ToString();
-			output.WriteLine(result + "EOL");
+			output.WriteLine(result + "EOM");
 			
 			string expected = @"Col A Col B Col C    
 ---------------------
@@ -328,7 +328,7 @@ R3-A  R3-B  R3-C
 				.ToString();
 
 			var result = tab.ToString();
-			output.WriteLine(result + "EOL");
+			output.WriteLine(result + "EOM");
 			
 			string expected = @"Name    Value  
 ---------------

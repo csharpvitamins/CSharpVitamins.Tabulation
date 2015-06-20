@@ -314,5 +314,32 @@ R3-A  R3-B  R3-C
 
 			Assert.Equal(expected, result);
 		}
+
+		[Fact]
+		void divider_should_renderHeaderAndBlankFooterWhenDefinedInline()
+		{
+			var tab = new PlainTextTable()
+				.AddRow("Name", "Value")
+				.Divide('-')
+				.AddRow("Data a1", "Data b1")
+				.AddRow("Data a2", "Data b2")
+				.AddRow("Data a3", "Data b3")
+				.Divide('-')
+				.ToString();
+
+			var result = tab.ToString();
+			output.WriteLine(result + "EOL");
+			
+			string expected = @"
+Name    Value  
+---------------
+Data a1 Data b1
+Data a2 Data b2
+Data a3 Data b3
+---------------
+";
+
+			Assert.Equal(expected, result);
+		}
 	}
 }

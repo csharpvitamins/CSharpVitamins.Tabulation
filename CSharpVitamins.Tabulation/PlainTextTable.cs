@@ -199,6 +199,26 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
+		/// Adds a divider at the current index.
+		/// </summary>
+		/// <param name="repeatChar">The char to repeat in the separator</param>
+		/// <param name="useColumnseparator">If true, the column separators are inserted at the correct intervals, otherwise the divider will span the entire length</param>
+		/// <example>
+		/// tab.AddRow("Head1", "Head2");
+		/// tab.Divide('-'); // after header
+		/// tab.ImportRows(/*...*/);
+		/// tab.Divide('-'); // after import of rows, before summary
+		/// tab.AddRow("Foot1", "Foot2");
+		/// </example>
+		/// <returns></returns>
+		public PlainTextTable Divide(char repeatChar, bool useColumnseparator = false)
+		{
+			Dividers.Add(new Divider { Index = rows.Count, Char = repeatChar, UseColumnSeparator = useColumnseparator });
+
+			return this;
+		}
+
+		/// <summary>
 		/// Enumerates data calling AddLine for each item
 		/// </summary>
 		/// <param name="rows"></param>

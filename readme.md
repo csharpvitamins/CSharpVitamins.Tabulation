@@ -77,7 +77,7 @@ If you want more control over the production of the results, you can specify `Fu
 	// make bools convert to Y/N
 	factory.ValueConverters.Add(typeof(bool), (prop, value) => (bool)value ? "Y" : "N");
 
-	// use the factory to create multiple defitions  
+	// use the factory to create multiple definitions
 	var def1 = factory.CreateFromModel<MyEntity>();
 
 	var def2 = factory.CreateFromModel<AnotherClass>();

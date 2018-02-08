@@ -424,7 +424,7 @@ namespace CSharpVitamins.Tabulation
 		public static string Pad(string text, int longestLength, Alignment align, bool padRight, char paddingChar = ' ')
 		{
 			if(null == text)
-				throw new ArgumentException("text");
+				throw new ArgumentException(nameof(text));
 
 			if (text.Length == longestLength)
 				return text;
@@ -457,7 +457,7 @@ namespace CSharpVitamins.Tabulation
 		static Alignment parse_alignment(string value)
 		{
 			if (null == value)
-				throw new ArgumentNullException("value");
+				throw new ArgumentNullException(nameof(value));
 
 			if (value.Length == 0)
 				return Alignment.Left;
@@ -481,7 +481,7 @@ namespace CSharpVitamins.Tabulation
 				case 'r': return Alignment.Right;
 			}
 
-			throw new NotSupportedException(string.Format("char({0}) is not a supported alignment."));
+			throw new NotSupportedException($"char({value}) is not a supported alignment.");
 		}
 	}
 }

@@ -82,7 +82,7 @@ namespace CSharpVitamins.Tabulation
 		public void Write(TextWriter writer, IEnumerable<T> rows, string delimiter = ",")
 		{
 			if (delimiter == null)
-				throw new ArgumentNullException("delimiter");
+				throw new ArgumentNullException(nameof(delimiter));
 
 			char[] escChars = delimiter.Length == 1 ? new[] { delimiter[0], '\n', '\r', '"' } : new[] { '\n', '\r', '"' };
 

@@ -22,7 +22,7 @@ namespace CSharpVitamins.Tabulation
 		{ }
 
 		public UnexpectedColumnCountException(int expected, int actual)
-			: this(string.Format("Expected {0} columns, but {1} were given.", expected, actual))
+			: this($"Expected {expected:n0} columns, but {actual:n0} were given.")
 		{ }
 	}
 }

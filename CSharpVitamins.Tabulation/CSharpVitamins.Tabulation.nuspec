@@ -6,11 +6,17 @@
     <authors>Dave Transom</authors>
     <projectUrl>https://github.com/csharpvitamins/csharpvitamins.tabulation/</projectUrl>
     <licenseUrl>https://raw.github.com/csharpvitamins/csharpvitamins.tabulation/master/LICENSE.md</licenseUrl>
-	<!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
+    <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>CharpVitamins.Tabulation provides helpers to create tabular data with little fuss i.e. Tab or comma separated values (CsvDefinition), or padded columns of plain text (PlainTextTable).</description>
-    <!--<releaseNotes>initial release.</releaseNotes>-->
+    <description>
+`CharpVitamins.Tabulation` provides helpers to create tabular data with little fuss i.e. Tab or comma separated values (`CsvDefinition`), 
+or padded columns of plain text (via `PlainTextTable`).</description>
+    <releaseNotes>
+* 1.0.2: Meta data update
+* 1.0.1: Adds `PlainTextTable.Divide()` method as a quick way to append a new divider.
+* 1.0.0: Initial release
+</releaseNotes>
     <copyright>Copyright 2015</copyright>
-    <tags>CSV Text</tags>
+    <tags>CSV Text PlainText</tags>
   </metadata>
 </package>

@@ -12,6 +12,7 @@
 `CharpVitamins.Tabulation` provides helpers to create tabular data with little fuss i.e. Tab or comma separated values (`CsvDefinition`), 
 or padded columns of plain text (via `PlainTextTable`).</description>
     <releaseNotes>
+* 1.0.3: Now throws `ArgumentNullException` for non-nullable params to the `CsvDefinition.Write()` method
 * 1.0.2: Meta data update
 * 1.0.1: Adds `PlainTextTable.Divide()` method as a quick way to append a new divider.
 * 1.0.0: Initial release

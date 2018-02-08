@@ -81,6 +81,12 @@ namespace CSharpVitamins.Tabulation
 		/// <param name="delimiter">The string to delimit column values with. A single character delimiter isare also used to escape the value, multi-character strings are not escaped.</param>
 		public void Write(TextWriter writer, IEnumerable<T> rows, string delimiter = ",")
 		{
+			if (writer == null)
+				throw new ArgumentNullException(nameof(writer));
+
+			if (rows == null)
+				throw new ArgumentNullException(nameof(rows));
+
 			if (delimiter == null)
 				throw new ArgumentNullException(nameof(delimiter));
 

@@ -1,6 +1,6 @@
 # CSharpVitamins.Tabulation
 
-This library aims to provide helpers for creating tabular data with minimal fuss. 
+This library provides helpers for creating tabular data with minimal fuss. 
 
 Easily create *tab* or *comma* separated values (via `CsvDefinition`), or padded and aligned columns of plain text (with `PlainTextTable`).
 
@@ -89,8 +89,8 @@ If you want more control over the production of the results, you can specify `Fu
 A `PlainTextTable` allows padding of tabular data so it can be displayed easily as text. 
  
  * Works best with small to medium length strings of data
- * Does not support *multi-line text* (newlines) or *tabs* 
- * Since columns are padded using spaces, output from this class is best presented using a **fixed-wdith font**
+ * __Does not support__ *multi-line text* (newlines) or *tabs* 
+ * Since columns are padded using spaces, output from this class is best presented using a **fixed-width font**
 
 
 #### Example 1: classic

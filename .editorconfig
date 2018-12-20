@@ -1,0 +1,13 @@
+root = true
+
+[*]
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{cs,xml}]
+indent_style = tab
+
+[*.{config,json,nuspec}]
+indent_style = space
+indent_size = 2

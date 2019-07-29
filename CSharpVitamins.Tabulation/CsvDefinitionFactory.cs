@@ -5,17 +5,22 @@ using System.Reflection;
 
 namespace CSharpVitamins.Tabulation
 {
+	/// <summary>
+	/// A factory class for working with models and property info
+	/// </summary>
 	public class CsvDefinitionFactory
 	{
 		/// <summary>
 		/// The failover value converter. Simply calls a object.ToString() on non-nullable values
 		/// </summary>
-		public static readonly Func<PropertyInfo, object, string> FailoverValueConverter = (prop, value) => null == value ? null : value.ToString();
+		public static readonly Func<PropertyInfo, object, string> FailoverValueConverter =
+			(prop, value) => value?.ToString();
 
 		/// <summary>
 		/// The failover property name converter. Simply returns prop.Name.
 		/// </summary>
-		public static Func<PropertyInfo, string> FailoverNameConverter = (prop) => prop.Name;
+		public static Func<PropertyInfo, string> FailoverNameConverter =
+			(prop) => prop.Name;
 
 		/// <summary>
 		/// 
@@ -24,7 +29,7 @@ namespace CSharpVitamins.Tabulation
 		{
 			ValueConverters = new Dictionary<Type, Func<PropertyInfo, object, string>>
 			{
-				{ typeof(DateTime), (prop, value) => ((DateTime)value).ToString("O") }
+				{ typeof(DateTime), (prop, value) => ((DateTime)value).ToString("O") },
 			};
 		}
 
@@ -34,7 +39,7 @@ namespace CSharpVitamins.Tabulation
 		public Func<PropertyInfo, string> NameConverter { get; set; }
 
 		/// <summary>
-		/// 
+		/// A dictionary of value converters, maps a type fo the function that will serialise the value to a string
 		/// </summary>
 		public IDictionary<Type, Func<PropertyInfo, object, string>> ValueConverters { get; set; }
 
@@ -49,8 +54,7 @@ namespace CSharpVitamins.Tabulation
 			if (null == converters)
 				return FailoverValueConverter;
 
-			Func<PropertyInfo, object, string> converter;
-			converters.TryGetValue(type, out converter);
+			converters.TryGetValue(type, out Func<PropertyInfo, object, string> converter);
 			return converter ?? FailoverValueConverter;
 		}
 

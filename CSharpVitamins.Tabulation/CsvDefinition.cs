@@ -90,13 +90,17 @@ namespace CSharpVitamins.Tabulation
 			if (delimiter == null)
 				throw new ArgumentNullException(nameof(delimiter));
 
-			char[] escChars = delimiter.Length == 1 ? new[] { delimiter[0], '\n', '\r', '"' } : new[] { '\n', '\r', '"' };
+			char[] escChars = delimiter.Length == 1
+				? new[] { delimiter[0], '\n', '\r', '"' }
+				: new[] { '\n', '\r', '"' };
 
 			if (!HeaderWritten)
 			{
 				HeaderWritten = true;
 
-				string header = string.Join(delimiter, this.Select(x => Escape(x.Key, escChars)));
+				string header = string.Join(delimiter, this.Select(
+					x => Escape(x.Key, escChars)
+				));
 				writer.WriteLine(header);
 			}
 
@@ -104,8 +108,9 @@ namespace CSharpVitamins.Tabulation
 			{
 				string line = string.Join(
 					delimiter,
-					this.Select(x => Escape(x.Value(row), escChars)) // x.Value == Func<T, string>
-					);
+					this.Select(
+						x => Escape(x.Value(row), escChars) // x.Value == Func<T, string>
+				));
 
 				writer.WriteLine(line);
 			}

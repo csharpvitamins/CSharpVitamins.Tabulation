@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace CSharpVitamins.Tabulation
 {
+	/// <summary>
+	/// An error thrown when the number of fields doesn't match the expected amount
+	/// </summary>
 	[Serializable]
 	public class UnexpectedColumnCountException : Exception
 	{

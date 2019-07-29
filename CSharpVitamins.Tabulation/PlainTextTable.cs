@@ -14,7 +14,7 @@ namespace CSharpVitamins.Tabulation
 		/// Default column separator is a single space
 		/// </summary>
 		public const string DefaultColumnSeparator = " ";
-		
+
 		/// <summary>
 		/// Keeps track of the max value lengths of each column
 		/// </summary>
@@ -168,8 +168,9 @@ namespace CSharpVitamins.Tabulation
 		public PlainTextTable Align(IEnumerable<char> alignments)
 		{
 			int index = -1;
-			foreach(char c in alignments)
-				Alignments[++index] = parse_alignment(c);
+
+			foreach (char letter in alignments)
+				Alignments[++index] = parse_alignment(letter);
 
 			return this;
 		}
@@ -193,7 +194,12 @@ namespace CSharpVitamins.Tabulation
 		/// <returns></returns>
 		public PlainTextTable DivideAt(int index, char repeatChar, bool useColumnseparator = false)
 		{
-			Dividers.Add(new Divider { Index = index, Char = repeatChar, UseColumnSeparator = useColumnseparator });
+			Dividers.Add(new Divider
+			{
+				Index = index,
+				Char = repeatChar,
+				UseColumnSeparator = useColumnseparator,
+			});
 
 			return this;
 		}
@@ -213,7 +219,12 @@ namespace CSharpVitamins.Tabulation
 		/// <returns></returns>
 		public PlainTextTable Divide(char repeatChar, bool useColumnseparator = false)
 		{
-			Dividers.Add(new Divider { Index = rows.Count, Char = repeatChar, UseColumnSeparator = useColumnseparator });
+			Dividers.Add(new Divider
+			{
+				Index = rows.Count,
+				Char = repeatChar,
+				UseColumnSeparator = useColumnseparator,
+			});
 
 			return this;
 		}
@@ -298,15 +309,14 @@ namespace CSharpVitamins.Tabulation
 			var columns = new ColumnState[ColumnsExpected];
 			for (var i = 0; i < ColumnsExpected; ++i)
 			{
-				Alignment align;
-				if (!Alignments.TryGetValue(i, out align))
+				if (!Alignments.TryGetValue(i, out Alignment align))
 					align = Alignment.Left;
 
 				columns[i] = new ColumnState
 				{
 					Index = i,
 					Width = maxColumnLengths[i],
-					Align = align
+					Align = align,
 				};
 			}
 			return columns;
@@ -323,7 +333,9 @@ namespace CSharpVitamins.Tabulation
 				return;
 
 			var columns = GetColumnState();
-			var lookup = Dividers.ToLookup(x => x.Index >= 0 ? x.Index : (length + x.Index + 1));
+			var lookup = Dividers.ToLookup(
+				x => x.Index >= 0 ? x.Index : (length + x.Index + 1)
+				);
 			for (int i = 0; i <= length; ++i)
 			{
 				var dividers = lookup[i];
@@ -423,7 +435,7 @@ namespace CSharpVitamins.Tabulation
 		/// <returns></returns>
 		public static string Pad(string text, int longestLength, Alignment align, bool padRight, char paddingChar = ' ')
 		{
-			if(null == text)
+			if (null == text)
 				throw new ArgumentException(nameof(text));
 
 			if (text.Length == longestLength)
@@ -441,8 +453,8 @@ namespace CSharpVitamins.Tabulation
 					int remainder = longestLength - text.Length; // required padding
 					int halfway = (int)Math.Floor(remainder / 2D);
 
-					return padRight 
-						? string.Concat(new string(paddingChar, halfway), text, new string(paddingChar, remainder - halfway)) 
+					return padRight
+						? string.Concat(new string(paddingChar, halfway), text, new string(paddingChar, remainder - halfway))
 						: string.Concat(new string(paddingChar, halfway), text);
 			}
 

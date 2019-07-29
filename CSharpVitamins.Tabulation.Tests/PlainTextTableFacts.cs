@@ -46,7 +46,7 @@ namespace Tests
 		{
 			var tab = new PlainTextTable(4);
 
-			Assert.Throws(typeof(UnexpectedColumnCountException), () => tab.ImportRows(create_test_data()));
+			Assert.Throws<UnexpectedColumnCountException>(() => tab.ImportRows(create_test_data()));
 		}
 
 		[Fact]
@@ -57,7 +57,7 @@ namespace Tests
 			var columns = tab.GetColumnState();
 
 			Assert.NotNull(columns);
-			Assert.Equal(0, columns.Length);
+			Assert.Empty(columns);
 		}
 
 		[Fact]
@@ -91,7 +91,7 @@ namespace Tests
 
 			tab.TrimTrailingSpace(true);
 
-			Assert.Equal(true, tab.TrimTrailingWhitespace);
+			Assert.True(tab.TrimTrailingWhitespace);
 		}
 
 		[Fact]

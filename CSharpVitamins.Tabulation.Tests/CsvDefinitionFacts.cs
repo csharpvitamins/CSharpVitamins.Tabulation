@@ -70,7 +70,7 @@ namespace Tests
 		{
 			var fields = create_definition();
 			var actual = fields.Contains("Field B");
-			Assert.Equal(true, actual);
+			Assert.True(actual);
 		}
 
 		[Fact]
@@ -78,7 +78,7 @@ namespace Tests
 		{
 			var fields = create_definition();
 			var actual = fields.Contains("Field X");
-			Assert.Equal(false, actual);
+			Assert.False(actual);
 		}
 
 		[Fact]
@@ -102,7 +102,7 @@ namespace Tests
 
 			bool result = fields.Remove("Field B");
 
-			Assert.Equal(true, result);
+			Assert.True(result);
 			Assert.Equal(2, fields.Count);
 
 			Assert.Equal("Field A", fields[0].Key);
@@ -117,7 +117,7 @@ namespace Tests
 
 			bool result = fields.Remove("Field X");
 
-			Assert.Equal(false, result);
+			Assert.False(result);
 			Assert.Equal(3, fields.Count);
 		}
 
@@ -139,7 +139,7 @@ namespace Tests
 		{
 			var def = create_definition();
 
-			Assert.Equal(false, def.HeaderWritten);
+			Assert.False(def.HeaderWritten);
 		}
 
 		[Fact]
@@ -151,7 +151,7 @@ namespace Tests
 			using (var writer = new StringWriter())
 				fields.Write(writer, data);
 
-			Assert.Equal(true, fields.HeaderWritten);
+			Assert.True(fields.HeaderWritten);
 		}
 
 		[Fact]
@@ -165,7 +165,7 @@ namespace Tests
 
 			fields.Reset();
 
-			Assert.Equal(false, fields.HeaderWritten);
+			Assert.False(fields.HeaderWritten);
 		}
 
 		static char[] escapeChars = new char[] { '\n', '\r', '"', ',' };

@@ -21,6 +21,7 @@ namespace CSharpVitamins.Tabulation
 		int[] maxColumnLengths;
 		List<string[]> rows;
 
+		/// <summary />
 		public PlainTextTable()
 		{
 			Reset();
@@ -30,12 +31,14 @@ namespace CSharpVitamins.Tabulation
 			Dividers = new List<Divider>();
 		}
 
+		/// <summary />
 		public PlainTextTable(IEnumerable<string[]> rows)
 			: this()
 		{
 			ImportRows(rows);
 		}
 
+		/// <summary />
 		public PlainTextTable(int columnsExpected)
 			: this()
 		{
@@ -43,6 +46,7 @@ namespace CSharpVitamins.Tabulation
 			maxColumnLengths = new int[columnsExpected];
 		}
 
+		/// <summary />
 		public PlainTextTable(int columnsExpected, IEnumerable<string[]> rows)
 			: this(columnsExpected)
 		{

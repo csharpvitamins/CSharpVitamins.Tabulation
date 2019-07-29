@@ -9,18 +9,27 @@ namespace CSharpVitamins.Tabulation
 	/// Creates a definition of fields to be used as a tabular output
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class CsvDefinition<T> : List<KeyValuePair<string, Func<T, string>>>
+	public class CsvDefinition<T> : List<CsvField<T>>
 	{
+		/// <summary />
 		public CsvDefinition()
 			: base()
 		{ }
 
+		/// <summary />
 		public CsvDefinition(int capacity)
 			: base(capacity)
 		{ }
 
-		public CsvDefinition(IEnumerable<KeyValuePair<string, Func<T, string>>> items)
+		/// <summary />
+		public CsvDefinition(IEnumerable<CsvField<T>> items)
 			: base(items)
+		{ }
+
+		// backwards compat
+		/// <summary />
+		public CsvDefinition(IEnumerable<KeyValuePair<string, Func<T, string>>> items)
+			: base(items.Cast<CsvField<T>>())
 		{ }
 
 		/// <summary>
@@ -44,17 +53,54 @@ namespace CSharpVitamins.Tabulation
 		/// <returns>True if the key was found.</returns>
 		public bool Contains(string key, StringComparison comparison = StringComparison.Ordinal)
 		{
-			return this.FindIndex(x => string.Equals(x.Key, key, comparison)) != -1;
+			return this.FindIndex(
+				x => string.Equals(x.Key, key, comparison)
+			) != -1;
 		}
 
 		/// <summary>
 		/// Adds a Key/Value pair to the definition - used for easy object initialisation
 		/// </summary>
 		/// <param name="key">The name of the column/header</param>
-		/// <param name="value">The Func to convert T into a string for the column value</param>
-		public void Add(string key, Func<T, string> value)
+		/// <param name="picker">The Func to convert T into a string for the column value</param>
+		public void Add(string key, Func<T, string> picker)
 		{
-			Add(new KeyValuePair<string, Func<T, string>>(key, value));
+			Add(new CsvField<T>(key, picker));
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="label"></param>
+		/// <param name="picker"></param>
+		public void Add(string key, string label, Func<T, string> picker)
+		{
+			Add(new CsvField<T>(key, picker) { Label = label });
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="label"></param>
+		/// <param name="picker"></param>
+		/// <param name="include"></param>
+		public void Add(string key, Func<T, string> picker, Func<string, bool> include)
+		{
+			Add(new CsvField<T>(key, picker) { Include = include, });
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="label"></param>
+		/// <param name="picker"></param>
+		/// <param name="include"></param>
+		public void Add(string key, string label, Func<T, string> picker, Func<string, bool> include)
+		{
+			Add(new CsvField<T>(key, picker) { Label = label, Include = include, });
 		}
 
 		/// <summary>
@@ -65,7 +111,10 @@ namespace CSharpVitamins.Tabulation
 		/// <returns>True if the field was found and removed, otherwise false</returns>
 		public bool Remove(string key, StringComparison comparison = StringComparison.Ordinal)
 		{
-			var index = this.FindIndex(x => string.Equals(x.Key, key, comparison));
+			var index = this.FindIndex(
+				x => string.Equals(x.Key, key, comparison)
+			);
+
 			if (index == -1)
 				return false;
 
@@ -81,26 +130,35 @@ namespace CSharpVitamins.Tabulation
 		/// <param name="delimiter">The string to delimit column values with. A single character delimiter isare also used to escape the value, multi-character strings are not escaped.</param>
 		public void Write(TextWriter writer, IEnumerable<T> rows, string delimiter = ",")
 		{
-			if (writer == null)
+			if (null == writer)
 				throw new ArgumentNullException(nameof(writer));
 
-			if (rows == null)
+			if (null == rows)
 				throw new ArgumentNullException(nameof(rows));
 
-			if (delimiter == null)
+			if (null == delimiter)
 				throw new ArgumentNullException(nameof(delimiter));
 
 			char[] escChars = delimiter.Length == 1
 				? new[] { delimiter[0], '\n', '\r', '"' }
 				: new[] { '\n', '\r', '"' };
 
+			var columns = this
+				.Where(
+					x => x.ShouldInclude
+				)
+				.ToArray();
+
 			if (!HeaderWritten)
 			{
 				HeaderWritten = true;
 
-				string header = string.Join(delimiter, this.Select(
-					x => Escape(x.Key, escChars)
-				));
+				string header = string.Join(
+					delimiter,
+					columns.Select(
+						x => Escape(x.Label ?? x.Key, escChars)
+					)
+				);
 				writer.WriteLine(header);
 			}
 
@@ -108,10 +166,10 @@ namespace CSharpVitamins.Tabulation
 			{
 				string line = string.Join(
 					delimiter,
-					this.Select(
-						x => Escape(x.Value(row), escChars) // x.Value == Func<T, string>
-				));
-
+					columns.Select(
+						x => Escape(x.PickValue(row), escChars)
+					)
+				);
 				writer.WriteLine(line);
 			}
 		}
@@ -138,12 +196,26 @@ namespace CSharpVitamins.Tabulation
 			if (null == tab)
 				tab = new PlainTextTable();
 
-			string[] line = this.Select(x => x.Key).ToArray();
+			var columns = this
+				.Where(
+					x => x.ShouldInclude
+				)
+				.ToArray();
+
+			string[] line = columns
+				.Select(
+					x => x.Label ?? x.Key
+				)
+				.ToArray();
 			tab.AddRow(line); // header
 
 			foreach (T row in rows)
 			{
-				line = this.Select(x => x.Value(row)).ToArray();
+				line = columns
+					.Select(
+						x => x.PickValue(row)
+					)
+					.ToArray();
 				tab.AddRow(line);
 			}
 

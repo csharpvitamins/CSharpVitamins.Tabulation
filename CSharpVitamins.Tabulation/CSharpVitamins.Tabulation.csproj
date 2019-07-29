@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Alignment.cs" />
     <Compile Include="ColumnState.cs" />
+    <Compile Include="CsvField.cs" />
     <Compile Include="Divider.cs" />
     <Compile Include="CsvDefinitionFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

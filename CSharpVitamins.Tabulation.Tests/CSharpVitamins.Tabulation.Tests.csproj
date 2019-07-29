@@ -190,6 +190,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CsvFieldFacts.cs" />
     <Compile Include="CsvDefinitionFacts.cs" />
     <Compile Include="PlainTextTableFacts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

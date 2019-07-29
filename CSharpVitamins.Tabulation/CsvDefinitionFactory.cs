@@ -22,6 +22,9 @@ namespace CSharpVitamins.Tabulation
 		public static Func<PropertyInfo, string> FailoverNameConverter =
 			(prop) => prop.Name;
 
+		/// <summary />
+		Func<PropertyInfo, bool> shouldInclude = prop => true;
+
 		/// <summary>
 		/// 
 		/// </summary>
@@ -44,6 +47,15 @@ namespace CSharpVitamins.Tabulation
 		public IDictionary<Type, Func<PropertyInfo, object, string>> ValueConverters { get; set; }
 
 		/// <summary>
+		/// Takes the details for a property and returns if the property should be included as a column (cannot be null)
+		/// </summary>
+		public Func<PropertyInfo, bool> ShouldInclude
+		{
+			get => shouldInclude;
+			set => shouldInclude = value ?? throw new NullReferenceException($"{nameof(ShouldInclude)} cannot be set to `null`");
+		}
+
+		/// <summary>
 		/// Resolves the value converter for the type
 		/// </summary>
 		/// <param name="type"></param>
@@ -61,24 +73,25 @@ namespace CSharpVitamins.Tabulation
 		/// <summary>
 		/// Creates a definition from the given model's properties (prop.Name &amp; prop.Value.ToString())
 		/// </summary>
-		/// <typeparam name="T">The model to reflect on</typeparam>
+		/// <typeparam name="Model">The model to reflect on</typeparam>
 		/// <returns>A TableDefinition instance that can render rows of data given the model T</returns>
-		public CsvDefinition<T> CreateFromModel<T>()
+		public CsvDefinition<Model> CreateFromModel<Model>()
 		{
 			var nameOf = NameConverter ?? FailoverNameConverter;
 
-			return new CsvDefinition<T>(
-				typeof(T)
+			return new CsvDefinition<Model>(
+				typeof(Model)
 					.GetProperties()
-					.Select(prop => 
+					.Where(ShouldInclude)
+					.Select(prop =>
 					{
 						var converter = resolve_converter(prop.PropertyType, this.ValueConverters);
 
-						return new KeyValuePair<string, Func<T, string>>(
+						return new CsvField<Model>(
 							nameOf(prop),
-							x =>
+							model =>
 							{
-								object value = prop.GetValue(x, null);
+								object value = prop.GetValue(model, null);
 								return converter(prop, value);
 							}
 						);

@@ -10,7 +10,7 @@ if ($semver) {
 
     Write-Host "> pack '$semver'..."
 
-    & .\.nuget\nuget.exe pack -version $semver -prop Configuration=Release -verbosity detailed -symbol -outputdirectory ..\build\
+    & nuget.exe pack -version $semver -prop Configuration=Release -verbosity detailed -symbol -outputdirectory ..\build\
 
     if ($?) {
         $packaged = $true;
@@ -38,7 +38,7 @@ if ($packaged) {
 
         Write-Host "> pushing '$semver' to nuget..."
 
-        & .\.nuget\nuget.exe push ..\build\CSharpVitamins.Tabulation.$semver.*.nupkg
+        & nuget.exe push ..\build\CSharpVitamins.Tabulation.$semver.*.nupkg
 
         if ($?) {
             Write-Host "> pushed okay" -ForegroundColor Green

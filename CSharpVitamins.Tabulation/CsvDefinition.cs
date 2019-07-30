@@ -76,7 +76,7 @@ namespace CSharpVitamins.Tabulation
 		/// <param name="picker"></param>
 		public void Add(string key, string label, Func<T, string> picker)
 		{
-			Add(new CsvField<T>(key, picker) { Label = label });
+			Add(new CsvField<T>(key, label, picker));
 		}
 
 		/// <summary>
@@ -88,7 +88,7 @@ namespace CSharpVitamins.Tabulation
 		/// <param name="include"></param>
 		public void Add(string key, Func<T, string> picker, Func<string, bool> include)
 		{
-			Add(new CsvField<T>(key, picker) { Include = include, });
+			Add(new CsvField<T>(key, label: null, picker: picker, include: include));
 		}
 
 		/// <summary>
@@ -100,7 +100,7 @@ namespace CSharpVitamins.Tabulation
 		/// <param name="include"></param>
 		public void Add(string key, string label, Func<T, string> picker, Func<string, bool> include)
 		{
-			Add(new CsvField<T>(key, picker) { Label = label, Include = include, });
+			Add(new CsvField<T>(key, label, picker, include));
 		}
 
 		/// <summary>

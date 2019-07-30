@@ -17,7 +17,7 @@ namespace CSharpVitamins.Tabulation
 		/// <summary>
 		/// The converter function used to produce a cell's string from the row object
 		/// </summary>
-		public Func<T, string> PickValue { get; private set; }
+		public Func<T, string> PickValue { get; set; }
 
 		/// <summary>
 		/// The column label to use. If null (default) uses the current `Key`. Can be an empty string to prevent a label from showing.
@@ -50,6 +50,20 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="label"></param>
+		/// <param name="picker"></param>
+		/// <param name="include"></param>
+		public CsvField(string key, string label, Func<T, string> picker, Func<string, bool> include = null)
+			: this(key, picker)
+		{
+			this.Label = label;
+			this.Include = include;
+		}
+
+		/// <summary>
 		/// If the field should be included in the output - see `.Include` for defineing func
 		/// </summary>
 		public bool ShouldInclude => null == Include || Include(this.Key);
@@ -66,6 +80,6 @@ namespace CSharpVitamins.Tabulation
 		/// </summary>
 		/// <param name="pair"></param>
 		public static implicit operator CsvField<T>(KeyValuePair<string, Func<T, string>> pair)
-			=> new CsvField<T>(pair.Key, pair.Value);
+			=> new CsvField<T>(key: pair.Key, picker: pair.Value);
 	}
 }

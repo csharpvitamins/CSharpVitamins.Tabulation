@@ -127,7 +127,7 @@ namespace CSharpVitamins.Tabulation
 		/// </summary>
 		/// <param name="writer">The TextWriter to write the lines to</param>
 		/// <param name="rows">The enumerable of T that represents the lines</param>
-		/// <param name="delimiter">The string to delimit column values with. A single character delimiter isare also used to escape the value, multi-character strings are not escaped.</param>
+		/// <param name="delimiter">The string to delimit column values with. A single character delimiter is also used to escape the value, multi-character strings are not escaped.</param>
 		public void Write(TextWriter writer, IEnumerable<T> rows, string delimiter = ",")
 		{
 			if (null == writer)
@@ -179,7 +179,7 @@ namespace CSharpVitamins.Tabulation
 		/// </summary>
 		/// <param name="writer">The TextWriter to write the lines to</param>
 		/// <param name="row">The single row of T that represents the line to write</param>
-		/// <param name="delimiter">The string to delimit column values with. A single character delimiter isare also used to escape the value, multi-character strings are not escaped.</param>
+		/// <param name="delimiter">The string to delimit column values with. A single character delimiter is also used to escape the value, multi-character strings are not escaped.</param>
 		public void Write(TextWriter writer, T row, string delimiter = ",")
 		{
 			this.Write(writer, new[] { row }, delimiter);
@@ -226,7 +226,7 @@ namespace CSharpVitamins.Tabulation
 		/// When found, escapes the entire string CSV style, by surrounding with quotes (embedded quotes are replaced with "")
 		/// </summary>
 		/// <param name="value">The string to escape</param>
-		/// <param name="chars">The sepcial chars that trigger the escape</param>
+		/// <param name="chars">The special chars that trigger the escape</param>
 		/// <remarks>
 		/// adapted from: http://www.asp.net/web-api/overview/formats-and-model-binding/media-formatters
 		/// 

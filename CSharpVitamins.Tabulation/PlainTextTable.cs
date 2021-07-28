@@ -249,7 +249,7 @@ namespace CSharpVitamins.Tabulation
 		/// <summary>
 		/// Adds the array of columns to the set of data - if expected columns is not yet set, the first call of 
 		/// this method will determine the number of expected columns. If subsequent lines do not have the same
-		/// element lenght, an UnexpectedColumnCountException is thrown
+		/// element length, an UnexpectedColumnCountException is thrown
 		/// </summary>
 		/// <param name="rowData"></param>
 		/// <returns></returns>
@@ -275,7 +275,7 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// updates the max-length references for all elemnts of data
+		/// updates the max-length references for all elements of data
 		/// </summary>
 		/// <param name="rowData"></param>
 		void update_column_max_lengths(string[] rowData)
@@ -358,7 +358,7 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Used to render each line the set of rows, performaing alignment and spacing
+		/// Used to render each line the set of rows, performing alignment and spacing
 		/// </summary>
 		/// <param name="writer"></param>
 		/// <param name="cells"></param>

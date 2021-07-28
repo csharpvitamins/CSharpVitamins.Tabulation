@@ -69,7 +69,7 @@ Alternatively, from  version 2.0.0, you can also define an _include function_ wh
       ...
     };
 
-Customising field labels can be achived by providing another string argument at second position, which makes it easier to work with more complex scenarios, say filtering keys based on prefix or different sources.
+Customising field labels can be achieved by providing another string argument at second position, which makes it easier to work with more complex scenarios, say filtering keys based on prefix or different sources.
 
     var fields = new CsvDefinition<MyEntity>
     {

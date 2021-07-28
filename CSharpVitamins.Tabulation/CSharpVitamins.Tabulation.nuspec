@@ -14,8 +14,8 @@ or padded columns of plain text (via `PlainTextTable`).</description>
     <releaseNotes>
 * 2.0.1: Makes private `CsvField.PickValue` setter public
          Adds constructor overloads for `CsvField` for all members
-* 2.0.0: Breaking: changes `CsvDefinition` from a `KeyValuePair&lt;string, Func&lt;T, string&gt;&gt;` to a custom `CsvField&lt;T&gt;` for simplicity to add more functionailty.
-         Adds option for overiding a label on `CsvDefinition` fields (key and label can now be different)
+* 2.0.0: Breaking: changes `CsvDefinition` from a `KeyValuePair&lt;string, Func&lt;T, string&gt;&gt;` to a custom `CsvField&lt;T&gt;` for simplicity to add more functionality.
+         Adds option for overriding a label on `CsvDefinition` fields (key and label can now be different)
          Adds option to provide an include function, to determine if the column should render or not (allows for simpler conditionally included columns)
 
 * 1.0.3: Now throws `ArgumentNullException` for non-nullable params to the `CsvDefinition.Write()` method

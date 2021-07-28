@@ -42,7 +42,7 @@ namespace CSharpVitamins.Tabulation
 		public Func<PropertyInfo, string> NameConverter { get; set; }
 
 		/// <summary>
-		/// A dictionary of value converters, maps a type fo the function that will serialise the value to a string
+		/// A dictionary of value converters, maps a type to the function that will serialise the value to a string
 		/// </summary>
 		public IDictionary<Type, Func<PropertyInfo, object, string>> ValueConverters { get; set; }
 

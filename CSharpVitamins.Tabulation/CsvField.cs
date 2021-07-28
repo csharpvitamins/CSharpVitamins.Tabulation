@@ -64,7 +64,7 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// If the field should be included in the output - see `.Include` for defineing func
+		/// If the field should be included in the output - see `.Include` for defining func
 		/// </summary>
 		public bool ShouldInclude => null == Include || Include(this.Key);
 

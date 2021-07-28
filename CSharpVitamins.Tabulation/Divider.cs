@@ -16,7 +16,7 @@
 		public bool UseColumnSeparator { get; set; }
 
 		/// <summary>
-		/// Index of where the seperator should occur. Use negative to work from the last item, backwards.
+		/// Index of where the separator should occur. Use negative to work from the last item, backwards.
 		/// </summary>
 		public int Index { get; set; }
 	}

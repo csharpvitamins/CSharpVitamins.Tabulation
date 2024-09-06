@@ -23,7 +23,7 @@ var fields = new CsvDefinition<MyEntity>
 {
   { "Username",      row => string.Concat(row.Prefix, ":", row.Username) },
   { "Email",         row => row.Email },
-  { "Status",        row => row.TotalSpend >= VIP_SPEND ? "VIP!$!" : "Pffft..., peon" },
+  { "Status",        row => row.TotalSpend >= VIP_SPEND ? "VIP!$!" : "Oh No!" },
   { "Spend ($)",     row => row.TotalSpend == null ? "None" : row.TotalSpend.ToString("n2") },
   { "Year of Birth", row => row.Yob > 1900 && row.Yob <= DateTime.UtcNow.Year ? row.Yob.Value.ToString() : null },
   { "Enabled",       row => row.IsEnabled ? "Y" : "N" },
@@ -58,11 +58,11 @@ At its heart, `CsvDefinition<T>` is a wrapper around ~~`List<KeyValuePair<string
 
 ```csharp
 if (!User.IsInRole("Admin")) {
-  fields.Remove("Spend $");
+  fields.Remove("Spend ($)");
 }
 ```
 
-Alternatively, from  version 2.0.0, you can also define an _include function_ when creating the definition. The function which will be evaluated during rendering.
+Alternatively, from version 2.0.0, you can also define an _include function_ when creating the definition. The function which will be evaluated during rendering.
 
 ```csharp
 var fields = new CsvDefinition<MyEntity>

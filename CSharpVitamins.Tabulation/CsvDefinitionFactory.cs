@@ -50,7 +50,14 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Resolves the value converter for the type
+		/// The binding flags to use when getting the properties of a model when calling <see cref="CreateFromModel{Model}"/>.
+		/// <para>Default: <c>BindingFlags.Instance | BindingFlags.Public</c></para>
+		/// </summary>
+		public BindingFlags PropertyBindingFlags { get; set; } =
+			BindingFlags.Instance | BindingFlags.Public;
+
+		/// <summary>
+		/// Resolves the value converter for the type.
 		/// </summary>
 		/// <param name="type"></param>
 		/// <param name="converters"></param>
@@ -75,7 +82,7 @@ namespace CSharpVitamins.Tabulation
 
 			return new CsvDefinition<Model>(
 				typeof(Model)
-					.GetProperties()
+					.GetProperties(PropertyBindingFlags)
 					.Where(ShouldInclude)
 					.Select(prop =>
 					{

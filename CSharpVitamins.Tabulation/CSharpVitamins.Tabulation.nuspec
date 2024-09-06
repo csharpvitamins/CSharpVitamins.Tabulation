@@ -13,7 +13,8 @@
 or padded columns of plain text (via `PlainTextTable`).</description>
     <releaseNotes>
 * 2.0.2: Documentation improvements.
-         Adds `DateTimeOffset` to default `ValueConverters ` (with roundtrip format "O").
+         Adds `DateTimeOffset` to default `CsvDefinitionFactory.ValueConverters ` (with roundtrip format "O").
+         Adds `CsvDefinitionFactory.PropertyBindingFlags` for property discovery and excludes static properties by default.
 * 2.0.1: Makes private `CsvField.PickValue` setter public.
          Adds constructor overloads for `CsvField` for all members.
 * 2.0.0: Breaking: changes `CsvDefinition` from a `KeyValuePair&lt;string, Func&lt;T, string&gt;&gt;` to a custom `CsvField&lt;T&gt;` for simplicity to add more functionality.

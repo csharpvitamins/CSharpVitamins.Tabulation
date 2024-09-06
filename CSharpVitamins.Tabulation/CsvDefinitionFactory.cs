@@ -37,6 +37,7 @@ namespace CSharpVitamins.Tabulation
 			new Dictionary<Type, Func<PropertyInfo, object, string>>
 			{
 				{ typeof(DateTime), (prop, value)       => ((DateTime)value).ToString("O") },
+				{ typeof(DateTimeOffset), (prop, value) => ((DateTimeOffset)value).ToString("O") },
 			};
 
 		/// <summary>

@@ -6,48 +6,41 @@ using System.Reflection;
 namespace CSharpVitamins.Tabulation
 {
 	/// <summary>
-	/// A factory class for working with models and property info
+	/// A factory class for working with models and property info.
 	/// </summary>
 	public class CsvDefinitionFactory
 	{
 		/// <summary>
-		/// The failover value converter. Simply calls a object.ToString() on non-nullable values
+		/// The failover value converter. Simply calls a <c>object.ToString()</c> on non-nullable values.
 		/// </summary>
 		public static readonly Func<PropertyInfo, object, string> FailoverValueConverter =
 			(prop, value) => value?.ToString();
 
 		/// <summary>
-		/// The failover property name converter. Simply returns prop.Name.
+		/// The failover property name converter. Simply returns <c>prop.Name</c>.
 		/// </summary>
 		public static Func<PropertyInfo, string> FailoverNameConverter =
-			(prop) => prop.Name;
+			prop => prop.Name;
 
 		/// <summary />
 		Func<PropertyInfo, bool> shouldInclude = prop => true;
 
 		/// <summary>
-		/// 
-		/// </summary>
-		public CsvDefinitionFactory()
-		{
-			ValueConverters = new Dictionary<Type, Func<PropertyInfo, object, string>>
-			{
-				{ typeof(DateTime), (prop, value) => ((DateTime)value).ToString("O") },
-			};
-		}
-
-		/// <summary>
-		/// Takes the details for a property and returns the name the column should be called
+		/// Takes the details for a property and returns the name the column should be called.
 		/// </summary>
 		public Func<PropertyInfo, string> NameConverter { get; set; }
 
 		/// <summary>
-		/// A dictionary of value converters, maps a type to the function that will serialise the value to a string
+		/// A dictionary of value converters, maps a type to the function that will serialise the value to a string.
 		/// </summary>
-		public IDictionary<Type, Func<PropertyInfo, object, string>> ValueConverters { get; set; }
+		public IDictionary<Type, Func<PropertyInfo, object, string>> ValueConverters { get; set; } =
+			new Dictionary<Type, Func<PropertyInfo, object, string>>
+			{
+				{ typeof(DateTime), (prop, value)       => ((DateTime)value).ToString("O") },
+			};
 
 		/// <summary>
-		/// Takes the details for a property and returns if the property should be included as a column (cannot be null)
+		/// Takes the details for a property and returns if the property should be included as a column (cannot be null).
 		/// </summary>
 		public Func<PropertyInfo, bool> ShouldInclude
 		{
@@ -71,10 +64,10 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Creates a definition from the given model's properties (prop.Name &amp; prop.Value.ToString())
+		/// Creates a definition from the given model's properties (<c>prop.Name</c> &amp; <c>prop.Value.ToString()</c>).
 		/// </summary>
 		/// <typeparam name="Model">The model to reflect on</typeparam>
-		/// <returns>A TableDefinition instance that can render rows of data given the model T</returns>
+		/// <returns>A TableDefinition instance that can render rows of data given the model T.</returns>
 		public CsvDefinition<Model> CreateFromModel<Model>()
 		{
 			var nameOf = NameConverter ?? FailoverNameConverter;

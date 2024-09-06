@@ -6,22 +6,24 @@ using System.Linq;
 namespace CSharpVitamins.Tabulation
 {
 	/// <summary>
-	/// Takes arrays of data (representing lines) and outputs them as fixed length columns
+	/// Takes arrays of data (representing lines) and outputs them as fixed length columns.
 	/// </summary>
 	public class PlainTextTable
 	{
 		/// <summary>
-		/// Default column separator is a single space
+		/// Default column separator is a single space.
 		/// </summary>
 		public const string DefaultColumnSeparator = " ";
 
 		/// <summary>
-		/// Keeps track of the max value lengths of each column
+		/// Keeps track of the max value lengths of each column.
 		/// </summary>
 		int[] maxColumnLengths;
 		List<string[]> rows;
 
-		/// <summary />
+		/// <summary>
+		/// Constructs a new instance with default options.
+		/// </summary>
 		public PlainTextTable()
 		{
 			Reset();
@@ -31,14 +33,20 @@ namespace CSharpVitamins.Tabulation
 			Dividers = new List<Divider>();
 		}
 
-		/// <summary />
+		/// <summary>
+		/// Constructs a new instance with default options and imports the rows to the table.
+		/// </summary>
+		/// <param name="rows">The lines of data for the table.</param>
 		public PlainTextTable(IEnumerable<string[]> rows)
 			: this()
 		{
 			ImportRows(rows);
 		}
 
-		/// <summary />
+		/// <summary>
+		/// Constructs a new instance with default options and sets the max number of columns expected.
+		/// </summary>
+		/// <param name="columnsExpected">The columns that are expected.</param>
 		public PlainTextTable(int columnsExpected)
 			: this()
 		{
@@ -46,45 +54,55 @@ namespace CSharpVitamins.Tabulation
 			maxColumnLengths = new int[columnsExpected];
 		}
 
-		/// <summary />
+		/// <summary>
+		/// Constructs a new instance with default options and sets the max number of columns expected and
+		/// imports the rows to the table.
+		/// </summary>
+		/// <param name="columnsExpected">The columns that are expected.</param>
+		/// <param name="rows">The lines of data for the table.</param>
 		public PlainTextTable(int columnsExpected, IEnumerable<string[]> rows)
 			: this(columnsExpected)
 		{
 			ImportRows(rows);
 		}
 
-		/// <summary>The column configuration for this object</summary>
+		/// <summary>
+		/// Gets the column configuration for this object.
+		/// </summary>
 		public IDictionary<int, Alignment> Alignments { get; private set; }
 
-		/// <summary>The number of columns each row must contain - if this is not set, it will 
-		/// infer the length from the first line added</summary>
+		/// <summary>
+		/// Gets the number of columns each row must contain.
+		/// <para>If this is not set explicitly, it will infer the length from the first line added.</para>
+		/// </summary>
 		public int ColumnsExpected { get; private set; }
 
-		/// <summary>The column separator, used to divide cells on the same row - defaults to 
-		/// a single space</summary>
+		/// <summary>
+		/// Gets or sets the column separator, used to divide cells on the same row.
+		/// <para>Default: <c>" "</c> (single space).</para>
+		/// </summary>
 		public string ColumnSeparator { get; set; }
 
 		/// <summary>
-		/// Trims any trailing whitespace from the rightmost column
+		/// Gets or sets the setting for trimming trailing whitespace from the rightmost column.
 		/// </summary>
 		public bool TrimTrailingWhitespace { get; set; }
 
 		/// <summary>
-		/// Gets/sets a list of dividers. To add a divider, set the index on the 
-		/// divider instance for where it should be inserted when rendering the 
-		/// results.
+		/// Gets or sets a list of dividers.
+		/// <para>To add a divider, set the index on the divider instance for where it should be inserted
+		/// when rendering the results.</para>
 		/// </summary>
 		public IList<Divider> Dividers { get; set; }
 
 		/// <summary>
-		/// The lines of data
-		/// 
-		/// Use this setter to reimport (and reset) the line data. 
-		/// To add multiple lines, use the ImportLines method directly.
+		/// The lines of data.
+		/// <para>Use this setter to reimport (and reset) the line data. </para>
+		/// <para>To add multiple lines, use the <see cref="ImportRows(IEnumerable{string[]})"/> method directly.</para>
 		/// </summary>
 		public IEnumerable<string[]> Rows
 		{
-			get { return rows; }
+			get => rows;
 			set
 			{
 				Reset();
@@ -95,9 +113,9 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Resets the lines and number of columns expected, but not any other configuration
+		/// Resets the lines and number of columns expected, but not any other configuration.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>The current instance for configuration chaining.</returns>
 		public PlainTextTable Reset()
 		{
 			rows = new List<string[]>();
@@ -106,10 +124,10 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// When true, trims any trailing whitespace from the rightmost column
+		/// When <c>true</c>, trims any trailing whitespace from the rightmost column.
 		/// </summary>
 		/// <param name="value">Defaults to true</param>
-		/// <returns></returns>
+		/// <returns>The current instance for configuration chaining.</returns>
 		public PlainTextTable TrimTrailingSpace(bool value = true)
 		{
 			TrimTrailingWhitespace = value;
@@ -117,10 +135,10 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// The string that separates two cells
+		/// The string that separates two cells.
 		/// </summary>
 		/// <param name="value">The separator for cells</param>
-		/// <returns></returns>
+		/// <returns>The current instance for configuration chaining.</returns>
 		public PlainTextTable SeparateBy(string value)
 		{
 			ColumnSeparator = value;
@@ -128,11 +146,11 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Sets the alignment of the column
+		/// Sets the alignment of the column.
 		/// </summary>
-		/// <param name="index">The column index to set the alignment of</param>
-		/// <param name="align">The alignment</param>
-		/// <returns></returns>
+		/// <param name="index">The column index to set the alignment of.</param>
+		/// <param name="align">The alignment.</param>
+		/// <returns>The current instance for configuration chaining.</returns>
 		public PlainTextTable Align(int index, Alignment align)
 		{
 			Alignments[index] = align;
@@ -140,11 +158,14 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Sets the alignment of a column
+		/// Sets the alignment of a column.
 		/// </summary>
-		/// <param name="index">The column index to set the alignment of</param>
-		/// <param name="align">The alignment char - 'l' for left, 'r' for right, 'c' or 'm' for centre/middle</param>
-		/// <returns></returns>
+		/// <param name="index">The column index to set the alignment of.</param>
+		/// <param name="align">
+		///   The alignment character.
+		///   <para><c>'l'</c> for left, <c>'r'</c> for right, <c>'c'</c> or <c>'m'</c> for centre/middle (case-insensitive).</para>
+		/// </param>
+		/// <returns>The current instance for configuration chaining.</returns>
 		public PlainTextTable Align(int index, char align)
 		{
 			Alignments[index] = parse_alignment(align);
@@ -152,10 +173,13 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Sets multiple alignments, matching the arguments index to the columns index
+		/// Sets multiple alignments, matching the arguments index to the columns index.
 		/// </summary>
-		/// <param name="alignments">The array or alignment characters, in column index order - 'l' for left, 'r' for right, 'c' or 'm' for centre/middle</param>
-		/// <returns></returns>
+		/// <param name="alignments">
+		///   The array of alignment characters, in column index order.
+		///   <para><c>'l'</c> for left, <c>'r'</c> for right, <c>'c'</c> or <c>'m'</c> for centre/middle (case-insensitive).</para>
+		/// </param>
+		/// <returns>The current instance for configuration chaining.</returns>
 		public PlainTextTable Align(params char[] alignments)
 		{
 			for (int index = 0; index < alignments.Length; ++index)
@@ -165,10 +189,13 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Sets multiple alignments, matching the arguments index to the columns index
+		/// Sets multiple alignments, matching the arguments index to the columns index.
 		/// </summary>
-		/// <param name="alignments">The array or alignment characters, in column index order - 'l' for left, 'r' for right, 'c' or 'm' for centre/middle</param>
-		/// <returns></returns>
+		/// <param name="alignments">
+		///   The array of alignment characters, in column index order.
+		///   <para><c>'l'</c> for left, <c>'r'</c> for right, <c>'c'</c> or <c>'m'</c> for centre/middle (case-insensitive).</para>
+		/// </param>
+		/// <returns>The current instance for configuration chaining.</returns>
 		public PlainTextTable Align(IEnumerable<char> alignments)
 		{
 			int index = -1;
@@ -180,29 +207,28 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Adds a new divider to the Dividers collection. 
-		/// 
-		/// Dividers are rendered before the index of the next row.
+		/// Adds a new divider to the <see cref="Dividers"/> collection.
+		/// <para>Dividers are rendered before the index of the next row.</para>
 		/// </summary>
 		/// <param name="index">
-		///	The line index of where the divider should be inserted. 
-		///	
-		/// Use a negative value to work from the last item, backwards (for a footer, for instance).
-		///	
-		///	* An index of 1 will insert a divider after the first row
-		///	* An index of -1 will insert a divider after the last row (an end-of-table divider)
-		///	* An index of -2 will insert a divider before the last row (a summary divider)
-		///	</param>
-		/// <param name="repeatChar">The char to repeat in the separator</param>
-		/// <param name="useColumnseparator">If true, the column separators are inserted at the correct intervals, otherwise the divider will span the entire length</param>
-		/// <returns></returns>
-		public PlainTextTable DivideAt(int index, char repeatChar, bool useColumnseparator = false)
+		///   The line index of where the divider should be inserted. 
+		///   <para>Use a negative value to work from the last item, backwards (for a footer, for instance).</para>
+		///   <list type="bullet">
+		///     <item>An index of <c>1</c> will insert a divider after the first row.</item>
+		///     <item>An index of <c>-1</c> will insert a divider after the last row (an end-of-table divider).</item>
+		///     <item>An index of <c>-2</c> will insert a divider before the last row (a summary divider).</item>
+		///   </list>
+		/// </param>
+		/// <param name="repeatChar">The char to repeat in the separator.</param>
+		/// <param name="useColumnSeparator">If true, the column separators are inserted at the correct intervals, otherwise the divider will span the entire length.</param>
+		/// <returns>The current instance for configuration chaining.</returns>
+		public PlainTextTable DivideAt(int index, char repeatChar, bool useColumnSeparator = false)
 		{
 			Dividers.Add(new Divider
 			{
 				Index = index,
 				Char = repeatChar,
-				UseColumnSeparator = useColumnseparator,
+				UseColumnSeparator = useColumnSeparator,
 			});
 
 			return this;
@@ -211,33 +237,35 @@ namespace CSharpVitamins.Tabulation
 		/// <summary>
 		/// Adds a divider at the current index.
 		/// </summary>
-		/// <param name="repeatChar">The char to repeat in the separator</param>
-		/// <param name="useColumnseparator">If true, the column separators are inserted at the correct intervals, otherwise the divider will span the entire length</param>
+		/// <param name="repeatChar">The char to repeat in the separator.</param>
+		/// <param name="useColumnSeparator">If true, the column separators are inserted at the correct intervals, otherwise the divider will span the entire length.</param>
 		/// <example>
+		/// <code>
 		/// tab.AddRow("Head1", "Head2");
 		/// tab.Divide('-'); // after header
 		/// tab.ImportRows(/*...*/);
 		/// tab.Divide('-'); // after import of rows, before summary
 		/// tab.AddRow("Foot1", "Foot2");
+		/// </code>
 		/// </example>
-		/// <returns></returns>
-		public PlainTextTable Divide(char repeatChar, bool useColumnseparator = false)
+		/// <returns>The current instance for configuration chaining.</returns>
+		public PlainTextTable Divide(char repeatChar, bool useColumnSeparator = false)
 		{
 			Dividers.Add(new Divider
 			{
 				Index = rows.Count,
 				Char = repeatChar,
-				UseColumnSeparator = useColumnseparator,
+				UseColumnSeparator = useColumnSeparator,
 			});
 
 			return this;
 		}
 
 		/// <summary>
-		/// Enumerates data calling AddLine for each item
+		/// Enumerates data calling AddLine for each item.
 		/// </summary>
-		/// <param name="rows"></param>
-		/// <returns></returns>
+		/// <param name="rows">The lines of data for the table.</param>
+		/// <returns>The current instance for configuration chaining.</returns>
 		public PlainTextTable ImportRows(IEnumerable<string[]> rows)
 		{
 			foreach (string[] row in rows)
@@ -251,8 +279,8 @@ namespace CSharpVitamins.Tabulation
 		/// this method will determine the number of expected columns. If subsequent lines do not have the same
 		/// element length, an UnexpectedColumnCountException is thrown
 		/// </summary>
-		/// <param name="rowData"></param>
-		/// <returns></returns>
+		/// <param name="rowData">The lines of data for the table.</param>
+		/// <returns>The current instance for configuration chaining.</returns>
 		public PlainTextTable AddRow(params string[] rowData)
 		{
 			var count = rowData.Length;
@@ -275,7 +303,7 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// updates the max-length references for all elements of data
+		/// Updates the max-length references for all elements of data.
 		/// </summary>
 		/// <param name="rowData"></param>
 		void update_column_max_lengths(string[] rowData)
@@ -288,9 +316,9 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Renders the tabbed data to string
+		/// Renders the tabbed data to string.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>The rendered string of the plain-text table.</returns>
 		public override string ToString()
 		{
 			using (var writer = new StringWriter())
@@ -301,16 +329,17 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Returns the column state information for the current object (used for rendering).
-		/// Includes max width of column, alignment and index
+		/// Gets the column state information for the current object (used for rendering).
+		/// <para>Includes max width of column, alignment and index.</para>
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>An array of metadata about the columns currently in the object.</returns>
 		public ColumnState[] GetColumnState()
 		{
 			if (ColumnsExpected < 1)
 				return new ColumnState[0];
 
 			var columns = new ColumnState[ColumnsExpected];
+
 			for (var i = 0; i < ColumnsExpected; ++i)
 			{
 				if (!Alignments.TryGetValue(i, out Alignment align))
@@ -323,13 +352,14 @@ namespace CSharpVitamins.Tabulation
 					Align = align,
 				};
 			}
+
 			return columns;
 		}
 
 		/// <summary>
-		/// Renders the set of data using the default alignment
+		/// Renders the set of data using the default alignment.
 		/// </summary>
-		/// <param name="writer"></param>
+		/// <param name="writer">The text writer to render the table to.</param>
 		public void Render(TextWriter writer)
 		{
 			int length = rows.Count;
@@ -339,7 +369,8 @@ namespace CSharpVitamins.Tabulation
 			var columns = GetColumnState();
 			var lookup = Dividers.ToLookup(
 				x => x.Index >= 0 ? x.Index : (length + x.Index + 1)
-				);
+			);
+
 			for (int i = 0; i <= length; ++i)
 			{
 				var dividers = lookup[i];
@@ -358,7 +389,7 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Used to render each line the set of rows, performing alignment and spacing
+		/// Used to render each line the set of rows, performing alignment and spacing.
 		/// </summary>
 		/// <param name="writer"></param>
 		/// <param name="cells"></param>
@@ -429,15 +460,24 @@ namespace CSharpVitamins.Tabulation
 		}
 
 		/// <summary>
-		/// Pads the string given the alignment
+		/// Pads the string based on the given the alignment.
 		/// </summary>
-		/// <param name="text">The value to pad</param>
-		/// <param name="longestLength">The length to pad the string to (longest length of a column)</param>
-		/// <param name="align">The alignment of the column</param>
-		/// <param name="padRight">If trailing whitespace _can_ be omitted, right padding will not be added.</param>
-		/// <param name="paddingChar">The character to use to pad the string, defaults to a space</param>
-		/// <returns></returns>
-		public static string Pad(string text, int longestLength, Alignment align, bool padRight, char paddingChar = ' ')
+		/// <param name="text">The value to pad.</param>
+		/// <param name="longestLength">The length to pad the string to (longest length of a column).</param>
+		/// <param name="align">The alignment of the column.</param>
+		/// <param name="padRight">If trailing whitespace <em>can</em> be omitted, right padding will not be added.</param>
+		/// <param name="paddingChar">
+		///   The character to use to pad the string.
+		///   <para>Default: <c>' '</c> (single space).</para>
+		/// </param>
+		/// <returns>The <c>text</c> with appropriate leading, trailing or both to reach the longest length.</returns>
+		public static string Pad(
+			string text,
+			int longestLength,
+			Alignment align,
+			bool padRight,
+			char paddingChar = ' '
+		)
 		{
 			if (null == text)
 				throw new ArgumentException(nameof(text));

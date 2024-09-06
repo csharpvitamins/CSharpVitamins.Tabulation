@@ -12,16 +12,17 @@
 `CharpVitamins.Tabulation` provides helpers to create tabular data with little fuss i.e. Tab or comma separated values (`CsvDefinition`), 
 or padded columns of plain text (via `PlainTextTable`).</description>
     <releaseNotes>
-* 2.0.1: Makes private `CsvField.PickValue` setter public
-         Adds constructor overloads for `CsvField` for all members
+* 2.0.2: Documentation improvements.
+* 2.0.1: Makes private `CsvField.PickValue` setter public.
+         Adds constructor overloads for `CsvField` for all members.
 * 2.0.0: Breaking: changes `CsvDefinition` from a `KeyValuePair&lt;string, Func&lt;T, string&gt;&gt;` to a custom `CsvField&lt;T&gt;` for simplicity to add more functionality.
-         Adds option for overriding a label on `CsvDefinition` fields (key and label can now be different)
-         Adds option to provide an include function, to determine if the column should render or not (allows for simpler conditionally included columns)
+         Adds option for overriding a label on `CsvDefinition` fields (key and label can now be different).
+         Adds option to provide an include function, to determine if the column should render or not (allows for simpler conditionally included columns).
 
-* 1.0.3: Now throws `ArgumentNullException` for non-nullable params to the `CsvDefinition.Write()` method
-* 1.0.2: Meta data update
+* 1.0.3: Now throws `ArgumentNullException` for non-nullable params to the `CsvDefinition.Write()` method.
+* 1.0.2: Meta data update.
 * 1.0.1: Adds `PlainTextTable.Divide()` method as a quick way to append a new divider.
-* 1.0.0: Initial release
+* 1.0.0: Initial release.
 </releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>CSV Text PlainText</tags>
